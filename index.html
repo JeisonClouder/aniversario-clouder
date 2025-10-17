@@ -47,6 +47,10 @@
       box-shadow:0 30px 80px rgba(0,0,0,0.5),
                  inset 0 0 40px rgba(255,255,255,0.05);
     }
+
+    img {
+      border-radius: 15px;
+    }
     
     .logo{
       font-size:4rem;margin-bottom:20px;
@@ -178,8 +182,8 @@
   <canvas id="confetti"></canvas>
   
   <div class="container">
-    <div class="logo">☁️</div>
-    <h1>🎉 Celebremos el 6° Aniversario de Clouder 🎉</h1>
+    <div class="logo"><img src="Logo Clouder.png" alt=""></div>
+    <h1>🎉 Celebremos Juntos el 6° Aniversario de Clouder 🎉</h1>
     <p class="subtitle">6 años de innovación y excelencia</p>
     
     <div id="input-area">
@@ -188,7 +192,7 @@
     </div>
     
     <div id="message" class="message" style="display:none;"></div>
-    <div id="emoji" class="celebration-emoji" style="display:none;">🎊🎈🎁🎂🎉</div>
+    <div id="emoji" class="celebration-emoji" style="display:none;">🎊🎈🎁🎂🥳</div>
   </div>
 
   <script>
@@ -280,23 +284,31 @@
       return words.map((w,i)=>`<span style="color:${colors[i%colors.length]};animation-delay:${i*0.12}s">${w}</span>`).join(' ');
     }
 
-    function showMessage(){
-      const name = input.value.trim() || 'amig@';
-      inputArea.style.display='none';
-      message.style.display='block';
-      emoji.style.display='block';
-      
-      const msg = `¡Estamos felices de que celebres con nosotros, ${name}! 🎊`;
-      message.classList.add('colorful');
-      message.innerHTML = rainbowText(msg);
-      
-      createConfetti(120);
-    }
+function showMessage(){
+  const name = input.value.trim() || 'amig@';
+  inputArea.style.display='none';
+  message.style.display='block';
+  emoji.style.display='block';
+
+  const msg = `¡Estamos felices de que celebres con nosotros, ${name}! 🎊`;
+  message.classList.add('colorful');
+  message.innerHTML = rainbowText(msg);
+
+  createConfetti(120);
+
+  // 🔊 Reproducir sonido de celebración
+  const sound = document.getElementById('celebrationSound');
+  sound.currentTime = 0; // por si se reproduce varias veces
+  sound.play().catch(err => console.log('El usuario debe interactuar primero:', err));
+}
+
 
     btn.addEventListener('click',showMessage);
     input.addEventListener('keydown',e=>{
       if(e.key==='Enter')showMessage();
     });
   </script>
+  <audio id="celebrationSound" src="cheers.mp3" preload="auto"></audio>
+
 </body>
 </html>
